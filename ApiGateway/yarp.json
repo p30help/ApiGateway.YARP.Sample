@@ -1,0 +1,46 @@
+{
+  "Yarp": {
+    "Routes": {
+
+      //read more : https://github.com/fzankl/yarp-sample/blob/main/src/ReverseProxy/appsettings.json
+
+      "user": {
+        "ClusterId": "ms.user",
+        "Match": {
+          "Path": "/api/user/{**remainder}"
+        },
+        "Transforms": [
+          { "PathPattern": "/{**remainder}" }
+        ]
+      },
+
+      "order": {
+        "ClusterId": "ms.order",
+        "Match": {
+          "Path": "/api/order/{**catch-all}"
+        }
+      }
+    },
+
+
+    "Clusters": {
+
+      "ms.user": {
+        "Destinations": {
+          "destination1": {
+            "Address": "https://localhost:8002"
+          }
+        }
+      },
+
+      "ms.order": {
+        "Destinations": {
+          "destination1": {
+            "Address": "https://localhost:7002"
+          }
+        }
+      }
+
+    }
+  }
+}
